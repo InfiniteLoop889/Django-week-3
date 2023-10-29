@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2>Active Listings</h2>
+
+<section class="bg-white text-center">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for listing in listings %}
+        <div class="col">
+            <div class="card h-100">
+                <a href="{% url 'auctions:listing_detail' listing.pk %}">
+                    <img type="gallery" class="card-img-top listing-img"
+                        src="{% if listing.image_URL %} {{ listing.image_URL }} {% else %} https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png {% endif %}"
+                        alt="Hollywood Sign on The Hill">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ listing }}: ${{ listing.starting_bid }}</h5>
+
+                    </div>
+                </a>
+                <div>
+                    <p class="card-text">
+                        {{ listing.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>
+            There are no active listings
+        </p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
